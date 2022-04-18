@@ -21,8 +21,8 @@ def get_title():
 
 def get_gallows(incorrect_guess_count):
     """ Returns a multiline string that acts as a visual for the gallows. 'gallows' is a dictionary acting as a switch
-    statement to satisfy project requirements only (it was probably cleaner as a tuple with a try/except block). No
-    validation here since the only argument passed in is the length of a list. """
+    statement to satisfy project requirements (it looks cleaner as a tuple). No validation here since the only argument
+    passed in is the length of a list. """
 
     gallows = {
         0:
@@ -102,7 +102,7 @@ def get_gallows(incorrect_guess_count):
 
 
 def display_game_board(word, hint, correct_letters, incorrect_letters):
-    """ Uses the parameters to display everything the user sees. """
+    """ Displays the gallows, underscores & correct guesses, incorrect guesses, and hint. """
 
     # Displays the gallows.
     print(get_gallows(len(incorrect_letters)))
@@ -128,8 +128,7 @@ def display_game_board(word, hint, correct_letters, incorrect_letters):
 
 
 def scrape_words():
-    """ Scrapes current and archived words from Merriam-Webster.com's 'Word of the Day' page and returns them
-    as a list. """
+    """ Scrapes current and archived words from Merriam-Webster's 'Word of the Day' page and returns them as a list. """
 
     # Scrapes the URL and creates a BeautifulSoup object.
     source_url = "https://www.merriam-webster.com/word-of-the-day/calendar"
@@ -139,11 +138,11 @@ def scrape_words():
         print("Requesting words from Merriam-Webster.com failed.")
         exit()
     if page.status_code != 200:
-        print(f"Requesting hint/definition from Merriam-Webster.com failed. HTTP status code: {page.status_code}")
+        print(f"Requesting words from Merriam-Webster.com failed. HTTP status code: {page.status_code}")
         exit()
     soup = BeautifulSoup(page.content, "html.parser")
 
-    # Locates the words of the day and adds them to an unordered set.
+    # Locates the words of the day and adds them to a list.
     results_list = []
     ul_list = soup.find_all("ul", "more-wod-items")
     for ul in ul_list:
@@ -159,7 +158,7 @@ def scrape_words():
 
 
 def scrape_hint(word):
-    """ Scrapes and returns a word's first definition from Merriam-Webster.com. """
+    """ Scrapes and returns definitions from Merriam-Webster to use as hints """
 
     source_url = f"https://www.merriam-webster.com/dictionary/{word}"
     try:
@@ -176,15 +175,15 @@ def scrape_hint(word):
 
 
 def get_guess(existing_guesses):
-    """ Prompts the user for input, validates the input, and returns it. """
+    """ Prompts the user for input then validates and returns it. """
 
-    valid_length = 1
+    valid_guess_length = 1
     while True:
         guess = input("Enter guess: ")
         guess = guess.upper()
-        # TODO: Find a better way to validate (try regex?)
-        if len(guess) != valid_length or re.search("[^A-Z- ']", guess):
-            print("Invalid input. Please enter one letter.")
+        # TODO: Test to reveal characters to add or a cleaner way to validate
+        if len(guess) != valid_guess_length or re.search("[^A-Z- ']", guess):
+            print("Invalid input. Please enter one character.")
         elif guess in existing_guesses:
             print(f"{guess} has already been guessed!")
         else:
@@ -209,8 +208,8 @@ def celebrate():
 
 
 def play_game():
-    """ The primary function. This calls the other functions to set up variables and also checks to see if the
-    game has been won or lost. """
+    """ The primary function. This calls the other functions to set up variables and checks to see if the game has been
+     won or lost. """
 
     # Sets up variables for a new game.
     word_list = scrape_words()
@@ -228,8 +227,8 @@ def play_game():
         display_game_board(word, hint, correct_letters, incorrect_letters)
         guessed_letter = get_guess(correct_letters + incorrect_letters)
 
+        # Adds correct input to the correct_letters list.
         if guessed_letter in word:
-            # Adds correct input to the correct_letters list.
             correct_letters.append(guessed_letter)
 
             # Checks to see if the word has been correctly guessed.
@@ -243,8 +242,8 @@ def play_game():
                 celebrate()
                 break
 
+        # Adds incorrect input to the incorrect_letters list.
         else:
-            # Adds incorrect input to the incorrect_letters list.
             incorrect_letters.append(guessed_letter)
 
             # Checks to see if the user is out of guesses.

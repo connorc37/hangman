@@ -1,7 +1,7 @@
 # hangman
  Word of the Day Hangman console game!
  
- - Scrapes https://www.merriam-webster.com/word-of-the-day/calendar for current and archived words to play with.
+ - Scrapes https://www.merriam-webster.com/word-of-the-day/calendar for words to play with.
  - Scrapes https://www.merriam-webster.com/dictionary/{word} for word hints/definitions.
  - Prints a Certificate of Excellence text file when you win so you can show your friends.
 

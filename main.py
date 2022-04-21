@@ -29,7 +29,8 @@ You must include nine of the following in your project:
 [X] Object-Oriented Functionality including constructors/methods/objects
 [ ] Object-Oriented Program inheritance/polymorphism including base-derived class
 [ ] Database connectivity
-[ ] A GUI component"""
+[ ] A GUI component
+"""
 
 from game import get_title, play_game
 

@@ -129,6 +129,7 @@ def display_game_board(word, hint, correct_letters, incorrect_letters):
 
 def scrape_words():
     """ Scrapes current and archived words from Merriam-Webster's 'Word of the Day' page and returns them as a list. """
+    # TODO: Call this outside of play_game() so it only runs once per session. No need to grab 300+ words every round.
 
     # Scrapes the URL and creates a BeautifulSoup object.
     source_url = "https://www.merriam-webster.com/word-of-the-day/calendar"
@@ -179,9 +180,8 @@ def get_guess(existing_guesses):
 
     valid_guess_length = 1
     while True:
-        guess = input("Enter guess: ")
-        guess = guess.upper()
-        # TODO: Test to reveal characters to add or a cleaner way to validate
+        guess = input("Enter guess: ").upper()
+        # TODO: Runs tests to reveal characters to add to validation. Maybe don't use regex.
         if len(guess) != valid_guess_length or re.search("[^A-Z- ']", guess):
             print("Invalid input. Please enter one character.")
         elif guess in existing_guesses:
@@ -208,8 +208,8 @@ def celebrate():
 
 
 def play_game():
-    """ The primary function. This calls the other functions to set up variables and checks to see if the game has been
-     won or lost. """
+    """ The primary function. This calls the other functions to set up variables and determines whether the user has
+    won or lost. """
 
     # Sets up variables for a new game.
     word_list = scrape_words()

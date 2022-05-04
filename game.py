@@ -181,7 +181,6 @@ def get_guess(existing_guesses):
     valid_guess_length = 1
     while True:
         guess = input("Enter guess: ").upper()
-        # TODO: Runs tests to reveal characters to add to validation. Maybe don't use regex.
         if len(guess) != valid_guess_length or re.search("[^A-Z- ']", guess):
             print("Invalid input. Please enter one character.")
         elif guess in existing_guesses:

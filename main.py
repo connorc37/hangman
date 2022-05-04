@@ -1,13 +1,13 @@
 """
 Name: Corey Connor
 Class: CIS189 Python
-Module: TODO
-Topic: TODO
+Module: 16
+Topic: Final Project
 Assignment: Final Project
 
 You must include the following functionality in your project:
 [X] Multiple functions (or methods)
-[ ] Unit testing TODO
+[X] Unit testing
 [X] Exception Handling (Try/Except)
 [X] Some sort of user input, including input validation
 [X] Some sort of output
